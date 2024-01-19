@@ -1,3 +1,5 @@
+import Draw from '@pages/draw/Draw';
+import DrawList from '@pages/drew-list/DrawList';
 import Login from '@pages/login/Login';
 import Register from '@pages/register/Register';
 import { createBrowserRouter } from 'react-router-dom';
@@ -9,6 +11,14 @@ const router = createBrowserRouter([
   {
     path: 'register',
     element: <Register />,
+  },
+  {
+    path: 'draw',
+    element: <Draw />,
+  },
+  {
+    path: 'draw-list',
+    element: <DrawList />,
   },
 ]);
 export default router;

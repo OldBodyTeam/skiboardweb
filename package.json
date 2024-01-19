@@ -10,6 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-spring/web": "^9.7.3",
+    "@use-gesture/react": "^10.3.0",
+    "ahooks": "^3.7.8",
     "antd-mobile": "^5.34.0",
     "axios": "^1.6.5",
     "dayjs": "^1.11.10",
