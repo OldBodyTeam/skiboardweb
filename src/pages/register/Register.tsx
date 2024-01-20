@@ -16,16 +16,19 @@ const Register = () => {
   };
   const handleRegister = () => {
     if (window.ReactNativeWebView) {
-      window.ReactNativeWebView.postMessage(JSON.stringify({goPage: 'Login'}));
+      window.ReactNativeWebView.postMessage(JSON.stringify({ goPage: 'Login' }));
     } else {
       const postMessage = window.parent.postMessage;
-      postMessage(JSON.stringify({goPage: 'Login'}));
+      postMessage(JSON.stringify({ goPage: 'Login' }));
     }
   };
   return (
     <div className="bg-[#131416] h-screen w-screen flex items-center justify-center flex-col relative">
       <div className="absolute top-0 left-0">
-        <div className="text-black login-logo font-bold absolute top-[98px] left-0 ignore-register-block whitespace-nowrap">
+        <div
+          className="text-black login-logo font-bold absolute top-[98px] left-0 ignore-register-block whitespace-nowrap"
+          onClick={handleRegister}
+        >
           Sign Up
         </div>
       </div>

@@ -4,10 +4,18 @@ import DrawItem from '@pages/draw/DrawItem';
 const DrawList = () => {
   const handleGoBack = () => {
     if (window.ReactNativeWebView) {
-      window.ReactNativeWebView.postMessage(JSON.stringify({ goPage: 'Design-Home' }));
+      window.ReactNativeWebView.postMessage(JSON.stringify({ goPage: 'Home', screen: 'DesignScreen' }));
     } else {
       const postMessage = window.parent.postMessage;
-      postMessage(JSON.stringify({ goPage: 'Design-Home' }));
+      postMessage(JSON.stringify({ goPage: 'Home', screen: 'DesignScreen' }));
+    }
+  };
+  const handleEditLight = () => {
+    if (window.ReactNativeWebView) {
+      window.ReactNativeWebView.postMessage(JSON.stringify({ goPage: 'EditLight' }));
+    } else {
+      const postMessage = window.parent.postMessage;
+      postMessage(JSON.stringify({ goPage: 'EditLight' }));
     }
   };
   return (
@@ -20,7 +28,9 @@ const DrawList = () => {
           <img src={backIcon} className="w-[32px] h-[32px] inline-block" />
         </div>
         <div className="text-[40px] text-white font-bold">My Effects</div>
-        <div className="text-[28px] text-white font-bold">Edit</div>
+        <div className="text-[28px] text-white font-bold" onClick={handleEditLight}>
+          Edit
+        </div>
       </div>
       <div className="px-[5px] flex flex-wrap items-center">
         {[[[{ selectStatus: true }]]].map((itemData, index) => {
