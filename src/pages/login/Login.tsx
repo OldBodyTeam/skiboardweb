@@ -1,5 +1,7 @@
 import { Input } from 'antd-mobile';
 import './login.less';
+import yellow from '@assets/login/yellow.png';
+import blue from '@assets/login/blue.png';
 const Login = () => {
   const handleLogin = () => {
     if (window.ReactNativeWebView) {
@@ -19,13 +21,10 @@ const Login = () => {
   };
   return (
     <div className="bg-[#131416] h-screen w-screen flex items-center justify-center flex-col relative">
-      <div className="absolute top-0 left-0">
-        <div
-          className="text-black login-logo font-bold absolute top-[98px] left-0 ignore-register-block"
-          onClick={handleGotoRegister}
-        >
-          Login
-        </div>
+      <img src={yellow} className="absolute top-0 left-0 z-[2] w-[430px] h-[255px]" onClick={handleGotoRegister} />
+      <img src={blue} className="absolute top-0 left-0 z-[1] w-[580px] h-[215px]" />
+      <div className="absolute top-0 left-0 z-[3]">
+        <div className="text-black login-logo font-bold absolute top-[98px] left-0 ignore-register-block">Login</div>
       </div>
       <div className="ignore-register-block w-screen">
         <div className="form-block">

@@ -1,6 +1,8 @@
 import { Input } from 'antd-mobile';
 import './register.less';
 import { useState } from 'react';
+import yellow from '@assets/register/yellow.png';
+import blue from '@assets/register/blue.png';
 const Register = () => {
   const [username, setUsername] = useState<string>();
   const handleUsername = (value: string) => {
@@ -14,7 +16,7 @@ const Register = () => {
   const handlePassword = (value: string) => {
     setPassword(value);
   };
-  const handleRegister = () => {
+  const handleLogin = () => {
     if (window.ReactNativeWebView) {
       window.ReactNativeWebView.postMessage(JSON.stringify({ goPage: 'Login' }));
     } else {
@@ -22,13 +24,15 @@ const Register = () => {
       postMessage(JSON.stringify({ goPage: 'Login' }));
     }
   };
+  const handleRegister = () => {
+    console.log('register');
+  };
   return (
     <div className="bg-[#131416] h-screen w-screen flex items-center justify-center flex-col relative">
-      <div className="absolute top-0 left-0">
-        <div
-          className="text-black login-logo font-bold absolute top-[98px] left-0 ignore-register-block whitespace-nowrap"
-          onClick={handleRegister}
-        >
+      <img src={blue} className="absolute top-0 left-0 z-[2] w-[430px] h-[255px]" onClick={handleLogin} />
+      <img src={yellow} className="absolute top-0 left-0 z-[1] w-[580px] h-[215px]" />
+      <div className="absolute top-0 left-0 z-[3]">
+        <div className="text-white login-logo font-bold absolute top-[98px] left-0 ignore-register-block whitespace-nowrap">
           Sign Up
         </div>
       </div>
