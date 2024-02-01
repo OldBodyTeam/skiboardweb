@@ -1,6 +1,6 @@
 import backIcon from '@assets/icon/back.png';
-import deleteIcon from '@assets/icon/delete-copy.png';
-import DrawItem from '@pages/draw/DrawItem';
+// import deleteIcon from '@assets/icon/delete-copy.png';
+// import DrawItem from '@pages/draw/DrawItem';
 import { useState } from 'react';
 const ScrollText = () => {
   const handleGoBack = () => {
@@ -11,14 +11,14 @@ const ScrollText = () => {
       postMessage(JSON.stringify({ goPage: 'Home', screen: 'DesignScreen' }));
     }
   };
-  const handleEditLight = () => {
-    if (window.ReactNativeWebView) {
-      window.ReactNativeWebView.postMessage(JSON.stringify({ goPage: 'EditLight' }));
-    } else {
-      const postMessage = window.parent.postMessage;
-      postMessage(JSON.stringify({ goPage: 'EditLight' }));
-    }
-  };
+  // const handleEditLight = () => {
+  //   if (window.ReactNativeWebView) {
+  //     window.ReactNativeWebView.postMessage(JSON.stringify({ goPage: 'EditLight' }));
+  //   } else {
+  //     const postMessage = window.parent.postMessage;
+  //     postMessage(JSON.stringify({ goPage: 'EditLight' }));
+  //   }
+  // };
   const [textStr, setTextStr] = useState<Array<string>>([]);
   const [textValue, setTextValue] = useState<string>('');
   const handleGenerate = () => {
