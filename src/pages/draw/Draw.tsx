@@ -51,8 +51,15 @@ const Draw = () => {
   const [clear, setClear] = useState(false);
   // 放大缩小
   const [scale, setScale] = useState(false);
+  // 禁止点击
+  const [tap, setTap] = useState(false);
   const handleScale = () => {
-    setScale((prev) => !prev);
+    setTap(true);
+    setClear(false);
+  };
+  const handleClear = () => {
+    setClear(true);
+    setTap(false);
   };
   /**
    * 数据结构变更
@@ -173,7 +180,11 @@ const Draw = () => {
       <div className="overflow-auto mb-[32px]" style={{ overflow: scale ? 'auto' : 'hidden' }}>
         <div
           className="flex justify-center items-center flex-col"
-          style={{ transform: scale ? 'scale(2)' : 'scale(1)', transformOrigin: '0 0' }}
+          style={{
+            transform: scale ? 'scale(2)' : 'scale(1)',
+            transformOrigin: '0 0',
+            pointerEvents: tap ? 'all' : 'none',
+          }}
         >
           {itemData.map((item, x) => {
             return (
@@ -204,7 +215,7 @@ const Draw = () => {
           <div onClick={handleScale} className="w-[62px] h-[62px] mr-[8px]">
             <img src={scaleIcon} alt="scaleIcon" className="w-full h-full rounded-full" />
           </div>
-          <div onClick={() => setClear(true)} className="w-[62px] h-[62px]">
+          <div onClick={handleClear} className="w-[62px] h-[62px]">
             <img src={cleanIcon} alt="cleanIcon" className="w-full h-full rounded-full" />
           </div>
         </div>
