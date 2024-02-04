@@ -214,52 +214,56 @@ const Draw = () => {
         style={{ borderRadius: '30px 30px 0 0' }}
       >
         <div className="text-[44px] font-bold text-[#333333] leading-[53px]">Frames</div>
-        <div className="mt-[32px] overflow-x-auto overflow-y-hidden flex items-center mx-[-10px] ">
+        <div className="mt-[32px] overflow-x-auto overflow-y-hidden flex items-start mx-[-10px] ">
           {drawWork.map((item, index) => {
             return (
-              <div
-                key={index + String(editIndex === index) + item.drawBlock.size}
-                className="min-w-[180px] w-[180px] h-[180px] flex items-center justify-center bg-[#F0F3F6] relative flex-col mx-[10px]"
-                style={
-                  editIndex === index ? { border: '2px solid rgba(89, 56, 236, 1)' } : { border: '2px solid #000000' }
-                }
-                onClick={() => handleCurrentOptBlock(index)}
-              >
-                <img
-                  src={copyIcon}
-                  className="absolute top-[10px] right-[10px] w-[32px] h-[32px]"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleCopy(index);
-                  }}
-                />
-                <img
-                  src={deleteIcon}
-                  className="absolute bottom-[10px] right-[10px] w-[32px] h-[32px]"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleDelete(index);
-                  }}
-                />
-                {covertCanUseCanvasData(item.drawBlock).map((item, x) => {
-                  return (
-                    <div className="flex justify-center items-center" key={x} style={{ pointerEvents: 'none' }}>
-                      {item.map((v, y) => {
-                        return (
-                          <DrawItem
-                            x={x}
-                            y={y}
-                            key={x + y}
-                            selectStatus={v.selectStatus}
-                            style={{ width: 5, height: 5 }}
-                            selectedColor="bg-yellow-500"
-                            color="bg-[#F0F3F6]"
-                          />
-                        );
-                      })}
-                    </div>
-                  );
-                })}
+              <div key={index + String(editIndex === index) + item.drawBlock.size}>
+                <div
+                  className="min-w-[180px] w-[180px] h-[180px] flex items-center justify-center bg-[#F0F3F6] relative flex-col mx-[10px]"
+                  style={
+                    editIndex === index ? { border: '2px solid rgba(89, 56, 236, 1)' } : { border: '2px solid #000000' }
+                  }
+                  onClick={() => handleCurrentOptBlock(index)}
+                >
+                  <img
+                    src={copyIcon}
+                    className="absolute top-[10px] right-[10px] w-[32px] h-[32px]"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleCopy(index);
+                    }}
+                  />
+                  <img
+                    src={deleteIcon}
+                    className="absolute bottom-[10px] right-[10px] w-[32px] h-[32px]"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDelete(index);
+                    }}
+                  />
+                  {covertCanUseCanvasData(item.drawBlock).map((item, x) => {
+                    return (
+                      <div className="flex justify-center items-center" key={x} style={{ pointerEvents: 'none' }}>
+                        {item.map((v, y) => {
+                          return (
+                            <DrawItem
+                              x={x}
+                              y={y}
+                              key={x + y}
+                              selectStatus={v.selectStatus}
+                              style={{ width: 5, height: 5 }}
+                              selectedColor="bg-yellow-500"
+                              color="bg-[#F0F3F6]"
+                            />
+                          );
+                        })}
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className="flex items-center justify-center mt-[8px] text-[rgba(51,51,51,1)] text-[24px]">
+                  {index + 1}/10
+                </div>
               </div>
             );
           })}
