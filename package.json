@@ -11,14 +11,18 @@
   },
   "dependencies": {
     "@react-spring/web": "^9.7.3",
+    "@types/lodash": "^4.14.202",
     "@use-gesture/react": "^10.3.0",
     "ahooks": "^3.7.8",
     "antd-mobile": "^5.34.0",
     "axios": "^1.6.5",
     "dayjs": "^1.11.10",
+    "immer": "^10.0.3",
+    "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.21.1"
+    "react-router-dom": "^6.21.1",
+    "use-immer": "^0.9.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",
