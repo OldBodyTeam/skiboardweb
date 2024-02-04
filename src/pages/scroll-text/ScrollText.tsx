@@ -26,7 +26,7 @@ const ScrollText = () => {
   };
   return (
     <div className="w-screen h-screen bg-[rgba(19,20,22,1)]">
-      <div className="flex items-center justify-center mb-[20px] relative pt-[10px]">
+      <div className="flex items-center justify-center mb-[10px] relative pt-[10px] h-[148px]">
         <div className="text-[40px] text-white font-bold">Scroling Text</div>
         <div
           className="bg-[rgba(255,255,255,0.15)] flex items-center justify-center rounded-full absolute left-[32px] w-[82px] h-[82px]"

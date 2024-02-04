@@ -16,6 +16,7 @@ import { enableMapSet } from 'immer';
 import { Input, Modal } from 'antd-mobile';
 import { debounce } from 'lodash';
 import { useMemoizedFn } from 'ahooks';
+import './cover.less';
 enableMapSet();
 const drawData = new Map<number, Map<string, { selectStatus: boolean }>>();
 const data = [1, 3, 5, 5, 7, 7, 9, 9, 11, 11, 13, 13, 15, 17, 15];
@@ -73,10 +74,10 @@ const Draw = () => {
   const [editIndex, setEditIndex] = useState<number>(0);
   const handleGoBack = () => {
     if (window.ReactNativeWebView) {
-      window.ReactNativeWebView.postMessage(JSON.stringify({ goPage: 'Design-Home', itemData }));
+      window.ReactNativeWebView.postMessage(JSON.stringify({ goPage: 'Home', screen: 'DesignScreen', itemData }));
     } else {
       const postMessage = window.parent.postMessage;
-      postMessage(JSON.stringify({ goPage: 'Design-Home', itemData }));
+      postMessage(JSON.stringify({ goPage: 'Home', screen: 'DesignScreen', itemData }));
     }
   };
   const handleCopy = (currentOptIndex: number) => {
@@ -177,7 +178,7 @@ const Draw = () => {
   });
   return (
     <div className="bg-[rgba(89,56,236,1)] h-screen w-screen">
-      <div className="flex items-center justify-center mb-[20px] relative pt-[10px]">
+      <div className="flex items-center justify-center mb-[10px] relative pt-[10px] h-[148px]">
         <div onClick={handleModifyName} className="flex items-center h-full">
           <div className="text-[40px] text-white font-bold">{drawName}</div>
           <img src={editIcon} className="w-[37px] h-[44px] inline-block ml-[10px]" />
