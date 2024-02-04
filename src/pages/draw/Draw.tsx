@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import DrawItem from './DrawItem';
 import leftIcon from '@assets/icon/left.png';
 import rightIcon from '@assets/icon/right.png';
@@ -13,7 +13,7 @@ import deleteIcon from '@assets/draw/delete.png';
 import Progress from 'src/components/progress/Progress';
 import { useImmer } from 'use-immer';
 import { enableMapSet } from 'immer';
-import { Dialog, Input, Modal } from 'antd-mobile';
+import { Input, Modal } from 'antd-mobile';
 import { debounce } from 'lodash';
 import { useMemoizedFn } from 'ahooks';
 enableMapSet();
