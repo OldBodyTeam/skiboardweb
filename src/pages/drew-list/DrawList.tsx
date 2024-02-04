@@ -20,7 +20,7 @@ const DrawList = () => {
   };
   return (
     <div className="w-screen h-screen bg-[rgba(19,20,22,1)]">
-      <div className="flex items-center justify-between mb-[15px] relative h-[148px] px-[32px]">
+      <div className="flex items-center justify-between mb-[20px] relative h-[148px] px-[32px]">
         <div
           className="bg-[rgba(255,255,255,0.15)] flex items-center justify-center rounded-full w-[82px] h-[82px]"
           onClick={handleGoBack}

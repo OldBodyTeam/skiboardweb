@@ -54,6 +54,9 @@ const Draw = () => {
   // 禁止点击
   const [tap, setTap] = useState(false);
   const handleScale = () => {
+    setScale((prev) => !prev);
+  };
+  const handleTap = () => {
     setTap(true);
     setClear(false);
   };
@@ -112,11 +115,21 @@ const Draw = () => {
       const { drawBlock, drawRestoreStack } = currentDrawBlock;
       // 处理选择的区块
       const row = drawBlock.get(x)!;
-      row?.set(`${x}-${y}`, { selectStatus: !clear });
-      drawBlock.set(x, row);
-      // 处理操作堆栈
-      drawRestoreStack.next.push({ x, y });
-      drawRestoreStack.prev = [];
+      console.log('xxx');
+      // 新增
+      if (tap && !clear && !row.get(`${x}-${y}`)?.selectStatus) {
+        row?.set(`${x}-${y}`, { selectStatus: true });
+        drawBlock.set(x, row);
+        // 处理操作堆栈
+        drawRestoreStack.next.push({ x, y });
+        drawRestoreStack.prev = [];
+      } else if (!tap && clear && row.get(`${x}-${y}`)?.selectStatus) {
+        // 清理操作
+        row?.set(`${x}-${y}`, { selectStatus: false });
+        drawBlock.set(x, row);
+        drawRestoreStack.next = [];
+        drawRestoreStack.prev.push({ x, y });
+      }
     });
   };
   // 转换数据
@@ -183,7 +196,7 @@ const Draw = () => {
           style={{
             transform: scale ? 'scale(2)' : 'scale(1)',
             transformOrigin: '0 0',
-            pointerEvents: tap ? 'all' : 'none',
+            // pointerEvents: tap ? 'all' : 'none',
           }}
         >
           {itemData.map((item, x) => {
@@ -209,7 +222,7 @@ const Draw = () => {
           </div>
         </div>
         <div className="flex items-center">
-          <div onClick={handleScale} className="w-[62px] h-[62px] mr-[8px]">
+          <div onClick={handleTap} className="w-[62px] h-[62px] mr-[8px]">
             <img src={magicIcon} alt="magicIcon" className="w-full h-full rounded-full" />
           </div>
           <div onClick={handleScale} className="w-[62px] h-[62px] mr-[8px]">

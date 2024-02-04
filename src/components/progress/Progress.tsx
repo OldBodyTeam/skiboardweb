@@ -8,6 +8,8 @@ const Progress = () => {
   const [{ x }, api] = useSpring(() => ({ x: 0, y: 0 }));
   const containerRef = useRef(null);
   const containerSize = useSize(containerRef);
+  const fatherRef = useRef(null);
+  const fatherSize = useSize(fatherRef);
   const imgRef = useRef(null);
   const imgSize = useSize(imgRef);
   const distance = useMemo(() => {
@@ -17,6 +19,9 @@ const Progress = () => {
   const handleChangeIndex = useMemoizedFn((index: number) => {
     setCurrentOptIndex(index);
   });
+  const leftDistance = useMemo(() => {
+    return ((fatherSize?.width ?? 0) - (containerSize?.width ?? 0)) / 2;
+  }, [fatherSize, containerSize]);
   const bind = useDrag(
     ({ offset: [ox], dragging }) => {
       api.start({ x: ox });
@@ -27,15 +32,15 @@ const Progress = () => {
         api.start({ x: itemWidth * index });
       }
     },
-    { axis: 'x', pointer: { touch: true }, filterTaps: true, bounds: { right: distance, left: 32 } },
+    { axis: 'x', pointer: { touch: true }, filterTaps: true, bounds: { right: distance, left: leftDistance } },
   );
   return (
-    <div className="progress-container">
+    <div className="progress-container" ref={fatherRef}>
       <div className="flex-1 items-center justify-center flex" ref={containerRef}>
         {[0, 1, 2, 3, 4].map((v) => {
           return (
             <div
-              className="flex items-center justify-center flex-1 z-10 pointer-events-none"
+              className="flex items-center justify-center flex-1 z-10 pointer-events-none text-[28px]"
               style={{ color: currentOptIndex === v ? 'white' : 'black' }}
               key={v}
             >
