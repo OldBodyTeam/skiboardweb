@@ -31,7 +31,7 @@ const Register = () => {
     <div className="bg-[#131416] h-screen w-screen flex items-center justify-center flex-col relative scope">
       <img src={blue} className="absolute top-0 left-0 z-[2] w-[430px] h-[255px]" onClick={handleLogin} />
       <img src={yellow} className="absolute top-0 left-0 z-[1] w-[580px] h-[215px]" />
-      <div className="absolute top-0 left-0 z-[3]">
+      <div className="absolute top-0 left-0 z-[3]" onClick={handleLogin}>
         <div className="text-white login-logo font-bold absolute top-[98px] left-0 ignore-register-block whitespace-nowrap">
           Sign Up
         </div>
@@ -42,7 +42,7 @@ const Register = () => {
           <Input
             autoComplete="off"
             autoCapitalize="off"
-            placeholder="请输入Username"
+            placeholder="Enter Username"
             className="login-form-input bg-[#131416] border-solid border-b-[1px] w-full border-[rgba(255,255,255,0.4)] pb-[33px] !text-white"
             onChange={handleUsername}
             value={username}
@@ -53,7 +53,7 @@ const Register = () => {
           <Input
             autoComplete="off"
             autoCapitalize="off"
-            placeholder="请输入Email"
+            placeholder="Enter Email"
             className="login-form-input bg-[#131416] border-solid border-b-[1px] w-full border-[rgba(255,255,255,0.4)] pb-[33px] !text-white"
             onChange={handleEmail}
             value={email}
@@ -62,7 +62,7 @@ const Register = () => {
         <div>
           <div className="text-white opacity-40 login-form-label">Password</div>
           <Input
-            placeholder="请输入Password"
+            placeholder="Enter Password"
             className="login-form-input bg-[#131416] border-solid border-b-[1px] w-full border-[rgba(255,255,255,0.4)] pb-[33px] !text-white overflow-hidden"
             type="password"
             onChange={handlePassword}
