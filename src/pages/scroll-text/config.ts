@@ -1,4 +1,4 @@
-import { DrawBlockType, drawData, getInitOptData } from '@pages/draw/config';
+import { DrawBlockType, drawData } from '@pages/draw/config';
 import { cloneDeep } from 'lodash';
 
 const a = [
