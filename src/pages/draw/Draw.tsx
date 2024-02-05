@@ -179,7 +179,7 @@ const Draw = () => {
   console.log(optBlockSize);
   return (
     <div className="bg-[rgba(89,56,236,1)] h-screen w-screen">
-      <div className="flex items-center justify-center mb-[10px] relative pt-[10px] h-[148px]" ref={headerRef}>
+      <div className="flex items-center justify-center mb-[10px] relative pt-[10px]" ref={headerRef}>
         <div onClick={handleModifyName} className="flex items-center h-full">
           <div className="text-[40px] text-white font-bold">{drawName}</div>
           <img src={editIcon} className="w-[37px] h-[44px] inline-block ml-[10px]" />
@@ -225,8 +225,8 @@ const Draw = () => {
       <div className="absolute left-0 bottom-0" ref={optBlockRef}>
         <div className="flex items-center justify-between mx-[67px] p-[17px] bg-[rgba(155,136,244,1)] rounded-[48px] mb-[32px]">
           <div className="flex items-center">
-            <ButtonShadow icon={rightIcon} handleOptions={handleRestore} />
-            <ButtonShadow icon={leftIcon} handleOptions={handleBack} />
+            <ButtonShadow icon={leftIcon} handleOptions={handleRestore} />
+            <ButtonShadow icon={rightIcon} handleOptions={handleBack} />
           </div>
           <div className="flex items-center">
             <ButtonBg icon={magicIcon} handleOptions={handleTap} selected={btnSelected.draw} />
