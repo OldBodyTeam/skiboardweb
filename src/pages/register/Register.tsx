@@ -24,6 +24,7 @@ const Register = () => {
       postMessage(JSON.stringify({ goPage: 'Login' }));
     }
   };
+
   const handleRegister = () => {
     console.log('register');
   };

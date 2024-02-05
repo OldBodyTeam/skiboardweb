@@ -13,9 +13,7 @@ import deleteIcon from '@assets/draw/delete.png';
 import Progress from 'src/components/progress/Progress';
 import { useImmer } from 'use-immer';
 import { enableMapSet } from 'immer';
-import { Input, Modal } from 'antd-mobile';
-import { debounce } from 'lodash';
-import { useMemoizedFn, useSize } from 'ahooks';
+import { useSize } from 'ahooks';
 import './cover.less';
 import ButtonShadow from 'src/components/button-shadow/ButtonShadow';
 import ButtonBg from 'src/components/button-bg/ButtonBg';
@@ -166,21 +164,27 @@ const Draw = () => {
       });
     }
   };
-  const [visible, setVisible] = useState(false);
-  const [drawInputName, setDrawInputName] = useState('Smiling Face');
   const [drawName, setDrawName] = useState('Smiling Face');
-  const handleModifyName = useMemoizedFn(() => {
-    setVisible(true);
-  });
+  window.getDrawTitle = (name: string) => {
+    setDrawName(name);
+    return true;
+  };
   const optBlockRef = useRef<HTMLDivElement>(null);
   const optBlockSize = useSize(optBlockRef);
   const headerRef = useRef<HTMLDivElement>(null);
   const headerRefSize = useSize(headerRef);
-  console.log(optBlockSize);
+  const openModal = () => {
+    if (window.ReactNativeWebView) {
+      window.ReactNativeWebView.postMessage(JSON.stringify({ openModal: true }));
+    } else {
+      const postMessage = window.parent.postMessage;
+      postMessage(JSON.stringify({ openModal: true }));
+    }
+  };
   return (
     <div className="bg-[rgba(89,56,236,1)] h-screen w-screen">
       <div className="flex items-center justify-center mb-[10px] relative pt-[10px]" ref={headerRef}>
-        <div onClick={handleModifyName} className="flex items-center h-full">
+        <div onClick={openModal} className="flex items-center h-full">
           <div className="text-[40px] text-white font-bold">{drawName}</div>
           <img src={editIcon} className="w-[37px] h-[44px] inline-block ml-[10px]" />
         </div>
@@ -316,20 +320,6 @@ const Draw = () => {
           </div>
         </div>
       </div>
-      <Modal
-        visible={visible}
-        closeOnAction
-        onClose={() => {
-          setVisible(false);
-        }}
-        actions={[{ key: 'Confirm', text: 'Confirm', onClick: () => setDrawName(drawInputName) }]}
-        content={
-          <div>
-            <div>更改名称</div>
-            <Input placeholder="请输入名称" onChange={debounce((val) => setDrawInputName(val))} value={drawInputName} />
-          </div>
-        }
-      ></Modal>
     </div>
   );
 };

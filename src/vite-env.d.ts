@@ -3,4 +3,5 @@ declare interface Window {
   ReactNativeWebView: {
     postMessage: (a: string) => void;
   };
+  getDrawTitle: (name: string) => void;
 }
