@@ -24,6 +24,7 @@
       "@assets/*": ["./src/assets/*"],
       "@pages/*": ["./src/pages/*"],
       "@router/*": ["./src/router/*"],
+      "@services/*": ["./src/services/*"]
     }
   },
   "include": ["src"],

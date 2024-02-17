@@ -20,11 +20,13 @@ const Login = () => {
     }
   };
   return (
-    <div className="bg-[#131416] h-screen w-screen flex items-center justify-center flex-col relative scope">
-      <img src={yellow} className="absolute top-0 left-0 z-[2] w-[430px] h-[255px]" onClick={handleGotoRegister} />
-      <img src={blue} className="absolute top-0 left-0 z-[1] w-[580px] h-[215px]" />
-      <div className="absolute top-0 left-0 z-[3]" onClick={handleGotoRegister}>
-        <div className="text-black login-logo font-bold absolute top-[98px] left-0 ignore-register-block">Login</div>
+    <div className="bg-[#131416] h-full w-screen scope min-h-screen">
+      <div className="mb-[175px] relative h-[255px]">
+        <img src={yellow} className="absolute top-0 left-0 z-[2] w-[430px] h-[255px]" onClick={handleGotoRegister} />
+        <img src={blue} className="absolute top-0 left-0 z-[1] w-[580px] h-[215px]" />
+        <div className="relative top-0 left-0 z-[3]" onClick={handleGotoRegister}>
+          <div className="text-black login-logo font-bold absolute top-[98px] left-0 ignore-register-block">Login</div>
+        </div>
       </div>
 
       <div className="ignore-register-block w-screen">
@@ -53,6 +55,7 @@ const Login = () => {
         >
           Login
         </div>
+        <div className="h-[40px]"></div>
       </div>
     </div>
   );

@@ -33,4 +33,4 @@ jobs:
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: 'root'
           TARGET: '/root/project/skiboardweb/dist'
-          EXCLUDE: '/dist/, /node_modules/'
+          EXCLUDE: '/node_modules/'

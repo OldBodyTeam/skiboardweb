@@ -29,14 +29,17 @@ const Register = () => {
     console.log('register');
   };
   return (
-    <div className="bg-[#131416] h-screen w-screen flex items-center justify-center flex-col relative scope">
-      <img src={blue} className="absolute top-0 left-0 z-[2] w-[430px] h-[255px]" onClick={handleLogin} />
-      <img src={yellow} className="absolute top-0 left-0 z-[1] w-[580px] h-[215px]" />
-      <div className="absolute top-0 left-0 z-[3]" onClick={handleLogin}>
-        <div className="text-white login-logo font-bold absolute top-[98px] left-0 ignore-register-block whitespace-nowrap">
-          Sign Up
+    <div className="bg-[#131416] h-screen w-screen scope">
+      <div className="relative mb-[175px] h-[255px]">
+        <img src={blue} className="absolute top-0 left-0 z-[2] w-[430px] h-[255px]" onClick={handleLogin} />
+        <img src={yellow} className="absolute top-0 left-0 z-[1] w-[580px] h-[215px]" />
+        <div className="absolute top-0 left-0 z-[3]" onClick={handleLogin}>
+          <div className="text-white login-logo font-bold absolute top-[98px] left-0 ignore-register-block whitespace-nowrap">
+            Sign Up
+          </div>
         </div>
       </div>
+
       <div className="ignore-register-block w-screen">
         <div className="form-block">
           <div className="text-white opacity-40 login-form-label">Username</div>
@@ -76,6 +79,7 @@ const Register = () => {
         >
           Sign Up
         </div>
+        <div className="h-[40px]"></div>
       </div>
     </div>
   );
