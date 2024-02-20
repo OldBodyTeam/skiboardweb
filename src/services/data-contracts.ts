@@ -10,10 +10,15 @@
  */
 
 export interface CreateUserDto {
+  id: string;
   username: string;
   email: string;
   password: string;
   avatar: string;
+  /** @format date-time */
+  createTime: string;
+  /** @format date-time */
+  updateTime: string;
 }
 
 export interface UserAvatarDto {
@@ -23,6 +28,12 @@ export interface UserAvatarDto {
 
 export interface UsernameDto {
   username: string;
+}
+
+export interface AuthUserDto {
+  access_token: string;
+  message: string;
+  userId: string;
 }
 
 export interface LoginUserDto {

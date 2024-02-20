@@ -3,34 +3,40 @@ import './register.less';
 import { useState } from 'react';
 import yellow from '@assets/register/yellow.png';
 import blue from '@assets/register/blue.png';
+import { debounce } from 'lodash';
 const Register = () => {
   const [username, setUsername] = useState<string>();
-  const handleUsername = (value: string) => {
+  const handleUsername = debounce((value: string) => {
     setUsername(value);
-  };
+  });
   const [email, setEmail] = useState<string>();
-  const handleEmail = (value: string) => {
+  const handleEmail = debounce((value: string) => {
     setEmail(value);
-  };
+  });
   const [password, setPassword] = useState<string>();
-  const handlePassword = (value: string) => {
+  const handlePassword = debounce((value: string) => {
     setPassword(value);
-  };
+  });
   const handleLogin = () => {
     if (window.ReactNativeWebView) {
-      window.ReactNativeWebView.postMessage(JSON.stringify({ goPage: 'Login' }));
+      window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'route', goPage: 'Login' }));
     } else {
       const postMessage = window.parent.postMessage;
-      postMessage(JSON.stringify({ goPage: 'Login' }));
+      postMessage(JSON.stringify({ goPage: 'Login', type: 'route' }));
     }
   };
 
   const handleRegister = () => {
-    console.log('register');
+    if (window.ReactNativeWebView) {
+      window.ReactNativeWebView.postMessage(JSON.stringify({ username, email, password, type: 'request' }));
+    } else {
+      const postMessage = window.parent.postMessage;
+      postMessage(JSON.stringify({ username, email, password, type: 'request' }));
+    }
   };
   return (
     <div className="bg-[#131416] h-screen w-screen scope">
-      <div className="relative mb-[175px] h-[255px]">
+      <div className="relative mb-[175px] h-[255px] w-screen">
         <img src={blue} className="absolute top-0 left-0 z-[2] w-[430px] h-[255px]" onClick={handleLogin} />
         <img src={yellow} className="absolute top-0 left-0 z-[1] w-[580px] h-[215px]" />
         <div className="absolute top-0 left-0 z-[3]" onClick={handleLogin}>
