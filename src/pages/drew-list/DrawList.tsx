@@ -1,26 +1,29 @@
 import backIcon from '@assets/icon/back.png';
 import deleteIcon from '@assets/icon/delete-copy.png';
 import DrawItem from '@pages/draw/DrawItem';
-import { useState } from 'react';
+import { MouseEvent, useState } from 'react';
+
 const DrawList = () => {
   const handleGoBack = () => {
     if (window.ReactNativeWebView) {
-      window.ReactNativeWebView.postMessage(JSON.stringify({ goPage: 'Home', screen: 'DesignScreen' }));
+      window.ReactNativeWebView.postMessage(JSON.stringify({ goPage: 'Home', screen: 'DesignScreen', type: 'route' }));
     } else {
       const postMessage = window.parent.postMessage;
-      postMessage(JSON.stringify({ goPage: 'Home', screen: 'DesignScreen' }));
+      postMessage(JSON.stringify({ goPage: 'Home', screen: 'DesignScreen', type: 'route' }));
     }
   };
   // 需要参数
-  const handleEditLight = () => {
+  const [currenStatus, setCurrentStatus] = useState(false);
+  const handleDeleteEffects = (e: MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
     if (window.ReactNativeWebView) {
-      window.ReactNativeWebView.postMessage(JSON.stringify({ goPage: 'EditLight' }));
+      window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'delete' }));
     } else {
       const postMessage = window.parent.postMessage;
-      postMessage(JSON.stringify({ goPage: 'EditLight' }));
+      postMessage(JSON.stringify({ type: 'delete' }));
     }
   };
-  const [currenStatus, setCurrentStatus] = useState(false);
+  const handleEditLight = () => {};
   return (
     <div className="w-screen h-screen bg-[rgba(19,20,22,1)]">
       <div className="flex items-center justify-between mb-[20px] relative h-[148px] px-[32px]">
@@ -35,7 +38,7 @@ const DrawList = () => {
           className="text-[28px] text-white font-bold absolute right-[32px]"
           onClick={() => setCurrentStatus(!currenStatus)}
         >
-          {currenStatus ? 'Delete' : 'Edit'}
+          {currenStatus ? 'Cancel' : 'Edit'}
         </div>
         <div />
       </div>
@@ -60,7 +63,9 @@ const DrawList = () => {
                   })}
                 </div>
                 {currenStatus ? (
-                  <img src={deleteIcon} alt="deleteIcon" className="absolute top-0 right-0 w-[56px] h-[56px]" />
+                  <div className="absolute top-0 right-0 w-[56px] h-[56px]" onClick={handleDeleteEffects}>
+                    <img src={deleteIcon} alt="deleteIcon" className=" w-[56px] h-[56px]" />
+                  </div>
                 ) : null}
               </div>
               <div className="text-white text-[28px] text-center mt-[32px]">Smiling Face</div>
