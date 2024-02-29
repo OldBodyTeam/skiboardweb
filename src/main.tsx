@@ -1,10 +1,9 @@
-import router from '@router/router';
-import ReactDOM from 'react-dom/client'
-import {
-  RouterProvider,
-} from "react-router-dom";
-import '@assets/common.less'
-
+import ReactDOM from 'react-dom/client';
+import '@assets/common.less';
+import App from './App';
+import { RecoilRoot } from 'recoil';
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <RouterProvider router={router} />,
-)
+  <RecoilRoot>
+    <App />
+  </RecoilRoot>,
+);

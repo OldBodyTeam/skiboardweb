@@ -4,4 +4,5 @@ declare interface Window {
     postMessage: (a: string) => void;
   };
   getDrawTitle: (name: string) => void;
+  getCollectionList: (data: CollectionType) => void;
 }

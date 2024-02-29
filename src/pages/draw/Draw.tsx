@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import DrawItem from './DrawItem';
 import leftIcon from '@assets/icon/left.png';
 import rightIcon from '@assets/icon/right.png';
@@ -17,7 +17,11 @@ import { useSize } from 'ahooks';
 import './cover.less';
 import ButtonShadow from 'src/components/button-shadow/ButtonShadow';
 import ButtonBg from 'src/components/button-bg/ButtonBg';
-import { getInitOptData, covertCanUseCanvasData } from './config';
+import { getInitOptData, covertCanUseCanvasData, covertDataToServer, DrawBlockType } from './config';
+import { handlePostMessage } from '@utils/brigde';
+import { useRecoilState } from 'recoil';
+import { collectionDetailState, collectionName } from 'src/stores/collection-detail/collectionDetail.atom';
+
 enableMapSet();
 
 const Draw = () => {
@@ -64,17 +68,13 @@ const Draw = () => {
    * 操作有哪些数据 - 画板初始化数据 option
    * 当前数据的操作记录 - 堆栈信息
    * */
-  const [drawWork, setDrawWork] = useImmer([{ ...getInitOptData() }]);
+  const [drawWork, setDrawWork] = useImmer<ReturnType<typeof getInitOptData>[]>([]);
   const [editIndex, setEditIndex] = useState<number>(0);
   const handleGoBack = () => {
-    if (window.ReactNativeWebView) {
-      window.ReactNativeWebView.postMessage(JSON.stringify({ goPage: 'Home', screen: 'DesignScreen', itemData }));
-    } else {
-      const postMessage = window.parent.postMessage;
-      postMessage(JSON.stringify({ goPage: 'Home', screen: 'DesignScreen', itemData }));
-    }
+    handlePostMessage('route', { goPage: 'Home', screen: 'DesignScreen' });
   };
   const handleCopy = (currentOptIndex: number) => {
+    handlePostMessage('copy-frame', { frameIndex: currentOptIndex });
     setDrawWork((draft) => {
       if (draft.length < 10) {
         const data = draft[currentOptIndex];
@@ -84,13 +84,19 @@ const Draw = () => {
     });
   };
   const handleDelete = (currentOptIndex: number) => {
+    handlePostMessage('delete-frame', {
+      frameIndex: currentOptIndex,
+    });
+    // 剩一个应该无法删除
     setDrawWork((prev) => {
+      if (prev.length <= 1) return prev;
       prev.splice(currentOptIndex, 1);
-      return [...prev];
     });
     setEditIndex(0);
   };
+  // 创建新的画布
   const handleAddDrawList = () => {
+    handlePostMessage('create-frame', {});
     setDrawWork((draft) => {
       if (draft.length < 10) {
         const data = getInitOptData();
@@ -110,7 +116,6 @@ const Draw = () => {
       const { drawBlock, drawRestoreStack } = currentDrawBlock;
       // 处理选择的区块
       const row = drawBlock.get(x)!;
-      console.log('xxx');
       // 新增
       if (tap && !clear && !row.get(`${x}-${y}`)?.selectStatus) {
         row?.set(`${x}-${y}`, { selectStatus: true });
@@ -129,7 +134,11 @@ const Draw = () => {
   };
   // 转换数据
   const itemData = useMemo(() => {
-    return covertCanUseCanvasData(drawWork[editIndex].drawBlock);
+    if (drawWork[editIndex] && drawWork[editIndex].drawBlock) {
+      return covertCanUseCanvasData(drawWork[editIndex].drawBlock);
+    } else {
+      return [];
+    }
   }, [drawWork, editIndex]);
 
   const handleRestore = () => {
@@ -164,23 +173,73 @@ const Draw = () => {
       });
     }
   };
-  const [drawName, setDrawName] = useState('Smiling Face');
-  window.getDrawTitle = (name: string) => {
-    setDrawName(name);
-    return true;
-  };
+  // const [drawName, setDrawName] = useState('Smiling Face');
+  // window.getDrawTitle = (name: string) => {
+  //   setDrawName(name);
+  //   return true;
+  // };
   const optBlockRef = useRef<HTMLDivElement>(null);
   const optBlockSize = useSize(optBlockRef);
   const headerRef = useRef<HTMLDivElement>(null);
   const headerRefSize = useSize(headerRef);
   const openModal = () => {
-    if (window.ReactNativeWebView) {
-      window.ReactNativeWebView.postMessage(JSON.stringify({ openModal: true }));
-    } else {
-      const postMessage = window.parent.postMessage;
-      postMessage(JSON.stringify({ openModal: true }));
-    }
+    const currentData = drawWork.map((v) => covertCanUseCanvasData(v.drawBlock));
+    handlePostMessage('modify-name', {
+      serverData: currentData.map((v, index) => {
+        return {
+          selected: index === editIndex,
+          frame: covertDataToServer(v),
+        };
+      }),
+    });
   };
+  const handleSaveCollection = () => {
+    const currentData = drawWork.map((v) => covertCanUseCanvasData(v.drawBlock));
+    handlePostMessage('create-collection', {
+      name: drawName,
+      serverData: currentData.map((v, index) => {
+        return {
+          selected: index === editIndex,
+          frame: covertDataToServer(v),
+        };
+      }),
+    });
+  };
+  const [collectionDetail] = useRecoilState(collectionDetailState);
+  const [drawName] = useRecoilState(collectionName);
+  useEffect(() => {
+    if (collectionDetail) {
+      setDrawWork((draft) => {
+        draft = [];
+        collectionDetail.frameList?.forEach((item) => {
+          // draft.push({ ...getInitOptData() });
+          const optData = { ...getInitOptData() };
+          const drawBlock = optData.drawBlock;
+          item.frame.forEach((x, index) => {
+            const row = new Map(drawBlock.get(index)!);
+            x.forEach((y) => {
+              row?.set(`${index}-${y}`, { selectStatus: true });
+              console.log(row.get(`${index}-${y}`)?.selectStatus);
+            });
+            console.log(row);
+            drawBlock.set(index, row);
+          });
+          draft.push({ ...optData, drawBlock });
+        });
+        return draft;
+      });
+      collectionDetail.frameList?.forEach((item, index) => {
+        if (item.selected) {
+          setEditIndex(index);
+        }
+      });
+    } else {
+      setDrawWork((draft) => {
+        draft.push({ ...getInitOptData() });
+        return draft;
+      });
+    }
+  }, [collectionDetail, setDrawWork]);
   return (
     <div className="bg-[rgba(89,56,236,1)] h-screen w-screen">
       <div className="flex items-center justify-center mb-[10px] relative pt-[10px]" ref={headerRef}>
@@ -212,7 +271,7 @@ const Draw = () => {
               // pointerEvents: tap ? 'all' : 'none',
             }}
           >
-            {itemData.map((item, x) => {
+            {itemData?.map((item, x) => {
               return (
                 <div className="flex justify-center items-center" key={x}>
                   {item.map((v, y) => {
@@ -241,7 +300,7 @@ const Draw = () => {
         <div className="bg-[#F0F3F6] p-[48px] w-screen" style={{ borderRadius: '30px 30px 0 0' }}>
           <div className="text-[44px] font-bold text-[#333333] leading-[53px]">Frames</div>
           <div className="mt-[32px] overflow-x-auto overflow-y-hidden flex items-start mx-[-10px] ">
-            {drawWork.map((item, index) => {
+            {drawWork?.map((item, index) => {
               return (
                 <div key={index + String(editIndex === index) + item.drawBlock.size}>
                   <div
@@ -281,7 +340,7 @@ const Draw = () => {
                                 selectStatus={v.selectStatus}
                                 style={{ width: 5, height: 5 }}
                                 selectedColor="bg-yellow-500"
-                                color="bg-[#F0F3F6]"
+                                color="bg-black"
                               />
                             );
                           })}
@@ -314,7 +373,10 @@ const Draw = () => {
             <div className="h-[96px] bg-[#D7DCE1] rounded-[48px] flex justify-center items-center text-[36px] leading-[50px] text-[#333333] font-semibold flex-1">
               Preview
             </div>
-            <div className="h-[96px] bg-[#F7E54C] rounded-[48px] flex justify-center items-center text-[36px] leading-[50px] text-[#333333] font-semibold flex-1 ml-[16px]">
+            <div
+              className="h-[96px] bg-[#F7E54C] rounded-[48px] flex justify-center items-center text-[36px] leading-[50px] text-[#333333] font-semibold flex-1 ml-[16px]"
+              onClick={handleSaveCollection}
+            >
               Save
             </div>
           </div>

@@ -11,10 +11,13 @@
 
 import {
   AuthUserDto,
+  CollectionEntity,
+  CreateCollectionDto,
   CreateUserDto,
   LoginUserDto,
   RegisterUserDto,
   UserAvatarDto,
+  UserEntity,
   UsernameDto,
 } from './data-contracts';
 import { ContentType, HttpClient, RequestParams } from './http-client';
@@ -28,13 +31,14 @@ export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType
    * @request POST:/api/user
    * @secure
    */
-  userControllerCreate = (data: CreateUserDto, params: RequestParams = {}) =>
-    this.request<void, any>({
+  userControllerCreate = (data: UserEntity, params: RequestParams = {}) =>
+    this.request<UserEntity, any>({
       path: `/api/user`,
       method: 'POST',
       body: data,
       secure: true,
       type: ContentType.Json,
+      format: 'json',
       ...params,
     });
   /**
@@ -42,7 +46,7 @@ export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType
    *
    * @tags user
    * @name UserControllerModifyAvatar
-   * @request PUT:/api/user/{id}/avatar
+   * @request POST:/api/user/{id}/avatar
    * @secure
    */
   userControllerModifyAvatar = (id: string, data: UserAvatarDto, params: RequestParams = {}) =>
@@ -55,7 +59,7 @@ export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType
       any
     >({
       path: `/api/user/${id}/avatar`,
-      method: 'PUT',
+      method: 'POST',
       body: data,
       secure: true,
       type: ContentType.FormData,
@@ -113,6 +117,109 @@ export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType
   /**
    * No description
    *
+   * @tags collection
+   * @name CollectionControllerCreate
+   * @request POST:/api/collection/{userId}/collection/create
+   * @secure
+   */
+  collectionControllerCreate = (userId: string, data: CreateCollectionDto, params: RequestParams = {}) =>
+    this.request<
+      {
+        data?: {
+          collection?: CollectionEntity;
+          userInfo?: UserEntity;
+        };
+        msg?: string;
+        code?: number;
+      },
+      any
+    >({
+      path: `/api/collection/${userId}/collection/create`,
+      method: 'POST',
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      format: 'json',
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags collection
+   * @name CollectionControllerModifyName
+   * @request PUT:/api/collection/{userId}/collection/{collectionId}/update
+   * @secure
+   */
+  collectionControllerModifyName = (
+    userId: string,
+    collectionId: string,
+    data: CreateCollectionDto,
+    params: RequestParams = {},
+  ) =>
+    this.request<
+      {
+        data?: CollectionEntity;
+        msg?: string;
+        code?: number;
+      },
+      any
+    >({
+      path: `/api/collection/${userId}/collection/${collectionId}/update`,
+      method: 'PUT',
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      format: 'json',
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags collection
+   * @name CollectionControllerDeleteCollection
+   * @request DELETE:/api/collection/{collectionId}/delete
+   * @secure
+   */
+  collectionControllerDeleteCollection = (collectionId: string, params: RequestParams = {}) =>
+    this.request<
+      {
+        msg?: string;
+        code?: number;
+      },
+      any
+    >({
+      path: `/api/collection/${collectionId}/delete`,
+      method: 'DELETE',
+      secure: true,
+      format: 'json',
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags collection
+   * @name CollectionControllerGetCollectionList
+   * @request GET:/api/collection/list/user/{userId}
+   * @secure
+   */
+  collectionControllerGetCollectionList = (userId: string, params: RequestParams = {}) =>
+    this.request<
+      {
+        data?: CollectionEntity;
+        msg?: string;
+        code?: number;
+      },
+      any
+    >({
+      path: `/api/collection/list/user/${userId}`,
+      method: 'GET',
+      secure: true,
+      format: 'json',
+      ...params,
+    });
+  /**
+   * No description
+   *
    * @tags auth
    * @name AuthControllerLogin
    * @request POST:/api/auth/login
@@ -143,7 +250,7 @@ export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType
   authControllerRegister = (data: RegisterUserDto, params: RequestParams = {}) =>
     this.request<
       {
-        data?: CreateUserDto;
+        data?: UserEntity;
         msg?: string;
         code?: number;
       },
@@ -153,6 +260,29 @@ export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType
       method: 'POST',
       body: data,
       type: ContentType.Json,
+      format: 'json',
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags auth
+   * @name AuthControllerGetProfile
+   * @request GET:/api/auth/profile
+   */
+  authControllerGetProfile = (params: RequestParams = {}) =>
+    this.request<
+      {
+        data?: {
+          sub?: string;
+        };
+        msg?: string;
+        code?: number;
+      },
+      any
+    >({
+      path: `/api/auth/profile`,
+      method: 'GET',
       format: 'json',
       ...params,
     });

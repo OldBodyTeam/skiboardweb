@@ -9,25 +9,56 @@
  * ---------------------------------------------------------------
  */
 
-export interface CreateUserDto {
+export interface UserEntity {
   id: string;
   username: string;
   email: string;
   password: string;
   avatar: string;
   /** @format date-time */
-  createTime: string;
+  createAt: string;
   /** @format date-time */
+  updateAt: string;
+  /** @format date-time */
+  deleteAt: string;
+  collections: CollectionEntity[];
+}
+
+export interface CollectionEntity {
+  id: string;
+  name: string;
+  frameList: string;
+  /** @format date-time */
+  createAt: string;
+  /** @format date-time */
+  updateAt: string;
+  /** @format date-time */
+  deleteAt: string;
+  owner: UserEntity;
+}
+
+export interface CreateUserDto {
+  id: string;
+  username: string;
+  email: string;
+  password: string;
+  avatar: string;
+  createTime: string;
   updateTime: string;
 }
 
 export interface UserAvatarDto {
-  /** @format binary */
-  file: File;
+  /** @format FormData */
+  file: formData;
 }
 
 export interface UsernameDto {
   username: string;
+}
+
+export interface CreateCollectionDto {
+  name: string;
+  frameList: string;
 }
 
 export interface AuthUserDto {

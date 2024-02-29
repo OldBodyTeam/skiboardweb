@@ -1,3 +1,5 @@
+import { cloneDeep } from 'lodash';
+
 const drawData = new Map<number, Map<string, { selectStatus: boolean }>>();
 const data = [1, 3, 5, 5, 7, 7, 9, 9, 11, 11, 13, 13, 15, 17, 15];
 for (let i = 0; i < data.length; i++) {
@@ -27,4 +29,31 @@ const covertCanUseCanvasData = (drawCanvas: DrawBlockType) => {
     return Object.keys(drawBlockItemObj).map((k) => drawBlockItemObj[k]);
   });
 };
-export { covertCanUseCanvasData, getInitOptData, drawData };
+const covertDataToServer = (
+  webData: {
+    selectStatus: boolean;
+  }[][],
+) => {
+  return webData.map((item) => {
+    return item
+      .map((v, index) => {
+        return v.selectStatus ? index : null;
+      })
+      .filter((v): v is number => typeof v === 'number');
+  });
+};
+const covertMap = (scrollText: number[][]) => {
+  // const coverLiterMap = new Map<string, DrawBlockType>();
+  // Object.keys(scrollText).forEach((v) => {
+  const optData = cloneDeep(drawData);
+  scrollText.forEach((item, index) => {
+    const row = optData.get(index);
+    item.forEach((b) => {
+      row?.set(`${index}-${b}`, { selectStatus: true });
+    });
+    // });
+    // coverLiterMap.set(String(v), optData);
+  });
+  return optData;
+};
+export { covertCanUseCanvasData, getInitOptData, drawData, covertDataToServer, covertMap };
