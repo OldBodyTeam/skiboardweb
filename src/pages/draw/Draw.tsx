@@ -335,7 +335,7 @@ const Draw = () => {
                                 selectStatus={v.selectStatus}
                                 style={{ width: 5, height: 5 }}
                                 selectedColor="bg-yellow-500"
-                                color="bg-black"
+                                color="bg-[#f0f3f6]"
                               />
                             );
                           })}
