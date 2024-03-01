@@ -173,11 +173,6 @@ const Draw = () => {
       });
     }
   };
-  // const [drawName, setDrawName] = useState('Smiling Face');
-  // window.getDrawTitle = (name: string) => {
-  //   setDrawName(name);
-  //   return true;
-  // };
   const optBlockRef = useRef<HTMLDivElement>(null);
   const optBlockSize = useSize(optBlockRef);
   const headerRef = useRef<HTMLDivElement>(null);

@@ -15,8 +15,6 @@
     "@react-spring/web": "^9.7.3",
     "@types/lodash": "^4.14.202",
     "@use-gesture/react": "^10.3.0",
-    "@webview-bridge/react": "^1.3.3",
-    "@webview-bridge/web": "^1.3.3",
     "ahooks": "^3.7.8",
     "antd-mobile": "^5.34.0",
     "axios": "^1.6.5",
