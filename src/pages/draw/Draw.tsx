@@ -17,7 +17,7 @@ import { useSize } from 'ahooks';
 import './cover.less';
 import ButtonShadow from 'src/components/button-shadow/ButtonShadow';
 import ButtonBg from 'src/components/button-bg/ButtonBg';
-import { getInitOptData, covertCanUseCanvasData, covertDataToServer, DrawBlockType } from './config';
+import { getInitOptData, covertCanUseCanvasData, covertDataToServer } from './config';
 import { handlePostMessage } from '@utils/brigde';
 import { useRecoilState } from 'recoil';
 import { collectionDetailState, collectionName } from 'src/stores/collection-detail/collectionDetail.atom';

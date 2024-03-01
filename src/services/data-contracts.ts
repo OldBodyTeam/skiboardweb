@@ -49,7 +49,7 @@ export interface CreateUserDto {
 
 export interface UserAvatarDto {
   /** @format FormData */
-  file: formData;
+  file: FormData;
 }
 
 export interface UsernameDto {
