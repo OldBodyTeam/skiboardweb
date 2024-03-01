@@ -44,6 +44,7 @@ const Login = () => {
             tabIndex={undefined}
             value={usernameOrEmail}
             onChange={debounce((text) => setUsernameOrEmail(text))}
+            inputMode="email"
           />
         </div>
         <div>
