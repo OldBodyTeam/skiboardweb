@@ -1,0 +1,18 @@
+{
+    "login": "Login",
+    "login-user-label": "Username/Email",
+    "login-user-placeholder": "Enter Username/Email",
+    "login-password-label": "Password",
+    "login-password-placeholder": "Enter Password",
+    "register": "Sign Up",
+    "register-user-label": "Username",
+    "register-email-label": "Email",
+    "register-password-label": "Password",
+    "register-user-placeholder": "Enter Username",
+    "register-email-placeholder": "Enter Email",
+    "register-password-placeholder": "Enter Password",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "save": "Save",
+    "preview": "Preview"
+}

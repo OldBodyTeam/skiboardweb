@@ -1,0 +1,18 @@
+{
+    "login": "登录",
+    "login-user-label": "用户名/邮件",
+    "login-user-placeholder": "请输入用户名/邮件",
+    "login-password-label": "密码",
+    "login-password-placeholder": "请输入密码",
+    "register": "注册",
+    "register-user-label": "用户名",
+    "register-email-label": "邮件",
+    "register-password-label": "密码",
+    "register-user-placeholder": "请输入用户名",
+    "register-email-placeholder": "请输入邮件",
+    "register-password-placeholder": "请输入密码",
+    "cancel": "取消",
+    "edit": "编辑",
+    "save": "保存",
+    "preview": "预览"
+}

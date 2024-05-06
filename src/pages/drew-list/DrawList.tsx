@@ -6,7 +6,7 @@ import { handlePostMessage } from '@utils/brigde';
 import { MouseEvent, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { collectionState } from 'src/stores/collection/collection.atom';
-
+import { useTranslation } from 'react-i18next';
 export type CollectionType = {
   id: string;
   name: string;
@@ -41,6 +41,7 @@ const DrawList = () => {
     handlePostMessage('go-detail', { collectionId });
   };
   const [collectionInfo] = useRecoilState(collectionState);
+  const { t } = useTranslation();
   return (
     <div className="w-screen h-full min-h-screen bg-[rgba(19,20,22,1)]">
       <div className="flex items-center justify-center mb-[20px] relative h-[148px] px-[32px]">
@@ -55,7 +56,7 @@ const DrawList = () => {
           className="text-[28px] text-white font-bold absolute right-[32px]"
           onClick={() => setCurrentStatus(!currenStatus)}
         >
-          {currenStatus ? 'Cancel' : 'Edit'}
+          {currenStatus ? t('cancel') : t('edit')}
         </div>
         <div />
       </div>

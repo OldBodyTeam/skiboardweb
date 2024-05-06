@@ -21,7 +21,7 @@ import { getInitOptData, covertCanUseCanvasData, covertDataToServer } from './co
 import { handlePostMessage } from '@utils/brigde';
 import { useRecoilState } from 'recoil';
 import { collectionDetailState, collectionName } from 'src/stores/collection-detail/collectionDetail.atom';
-
+import { useTranslation } from 'react-i18next';
 enableMapSet();
 
 const Draw = () => {
@@ -235,6 +235,8 @@ const Draw = () => {
       });
     }
   }, [collectionDetail, setDrawWork]);
+  const { t } = useTranslation();
+
   return (
     <div className="bg-[rgba(89,56,236,1)] h-screen w-screen">
       <div className="flex items-center justify-center mb-[10px] relative pt-[10px]" ref={headerRef}>
@@ -366,13 +368,13 @@ const Draw = () => {
           </div>
           <div className="flex items-center justify-between mb-[20px]">
             <div className="h-[96px] bg-[#D7DCE1] rounded-[48px] flex justify-center items-center text-[36px] leading-[50px] text-[#333333] font-semibold flex-1">
-              Preview
+              {t('preview')}
             </div>
             <div
               className="h-[96px] bg-[#F7E54C] rounded-[48px] flex justify-center items-center text-[36px] leading-[50px] text-[#333333] font-semibold flex-1 ml-[16px]"
               onClick={handleSaveCollection}
             >
-              Save
+              {t('save')}
             </div>
           </div>
         </div>
