@@ -5,14 +5,10 @@ import { useState } from 'react';
 import { configData } from './config';
 import { covertCanUseCanvasData } from '@pages/draw/config';
 import DrawItem from '@pages/draw/DrawItem';
+import { handlePostMessage } from '@utils/brigde';
 const ScrollText = () => {
   const handleGoBack = () => {
-    if (window.ReactNativeWebView) {
-      window.ReactNativeWebView.postMessage(JSON.stringify({ goPage: 'Home', screen: 'DesignScreen' }));
-    } else {
-      const postMessage = window.parent.postMessage;
-      postMessage(JSON.stringify({ goPage: 'Home', screen: 'DesignScreen' }));
-    }
+    handlePostMessage('back', { goPage: 'Home', screen: 'DesignScreen' });
   };
   // const handleEditLight = () => {
   //   if (window.ReactNativeWebView) {
@@ -25,7 +21,9 @@ const ScrollText = () => {
   const [textStr, setTextStr] = useState<Array<string>>([]);
   const [textValue, setTextValue] = useState<string>('');
   const handleGenerate = () => {
-    setTextStr(textValue.trim().toLowerCase().split(''));
+    const str = textValue.trim().toLowerCase().split('');
+    setTextStr(str);
+    handlePostMessage('chooseText', { str });
   };
   return (
     <div className="w-screen min-h-screen bg-[rgba(19,20,22,1)]">
