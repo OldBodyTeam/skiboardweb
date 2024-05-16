@@ -6,6 +6,7 @@ import { configData } from './config';
 import { covertCanUseCanvasData } from '@pages/draw/config';
 import DrawItem from '@pages/draw/DrawItem';
 import { handlePostMessage } from '@utils/brigde';
+import { useTranslation } from 'react-i18next';
 const ScrollText = () => {
   const handleGoBack = () => {
     handlePostMessage('back', { goPage: 'Home', screen: 'DesignScreen' });
@@ -25,10 +26,11 @@ const ScrollText = () => {
     setTextStr(str);
     handlePostMessage('chooseText', { str });
   };
+  const { t } = useTranslation();
   return (
     <div className="w-screen min-h-screen bg-[rgba(19,20,22,1)]">
       <div className="flex items-center justify-center mb-[10px] relative pt-[10px] h-[148px]">
-        <div className="text-[40px] text-white font-bold">Scroling Text</div>
+        <div className="text-[40px] text-white font-bold">{t('scroll-text')}</div>
         <div
           className="bg-[rgba(255,255,255,0.15)] flex items-center justify-center rounded-full absolute left-[32px] w-[82px] h-[82px]"
           onClick={handleGoBack}
@@ -41,12 +43,13 @@ const ScrollText = () => {
           className="flex-1 bg-[rgba(52,53,54,0.3)] rounded-[32px] h-[100px] text-[28px] pl-[32px]"
           value={textValue}
           onChange={(e) => setTextValue(e.target.value)}
+          placeholder={t('scroll-text-placeholder')}
         />
         <div
           className="w-[300px] h-[100px] rounded-[32px] bg-[#F9DD58] flex items-center justify-center absolute top-0 right-0 text-[32px] font-bold text-[#131416]"
           onClick={handleGenerate}
         >
-          Generate
+          {t('scroll-text-generate')}
         </div>
       </div>
       {textStr.length > 0 ? (
@@ -54,8 +57,6 @@ const ScrollText = () => {
           {textStr.map((text) => {
             const item = configData.get(text);
             if (!item) return null;
-            console.log(covertCanUseCanvasData(item));
-
             return (
               <div
                 key={text}

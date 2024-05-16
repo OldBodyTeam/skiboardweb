@@ -2,9 +2,10 @@ import { useSpring, animated } from '@react-spring/web';
 import { useDrag } from '@use-gesture/react';
 import './style.less';
 import sliderItem from '@assets/icon/slider-item.png';
-import { useMemo, useRef, useState } from 'react';
+import { FC, useMemo, useRef, useState } from 'react';
 import { useMemoizedFn, useSize } from 'ahooks';
-const Progress = () => {
+const Progress: FC<{ onChange: (index: number) => void }> = (props) => {
+  const { onChange } = props;
   const [{ x }, api] = useSpring(() => ({ x: 0, y: 0 }));
   const containerRef = useRef(null);
   const containerSize = useSize(containerRef);
@@ -18,6 +19,7 @@ const Progress = () => {
   const [currentOptIndex, setCurrentOptIndex] = useState(0);
   const handleChangeIndex = useMemoizedFn((index: number) => {
     setCurrentOptIndex(index);
+    onChange(index);
   });
   const leftDistance = useMemo(() => {
     return ((fatherSize?.width ?? 0) - (containerSize?.width ?? 0)) / 2;

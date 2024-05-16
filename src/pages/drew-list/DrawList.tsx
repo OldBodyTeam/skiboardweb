@@ -51,7 +51,7 @@ const DrawList = () => {
         >
           <img src={backIcon} className="w-[32px] h-[32px] inline-block" />
         </div>
-        <div className="text-[40px] text-white font-bold">My Effects</div>
+        <div className="text-[40px] text-white font-bold">{t('effect')}</div>
         <div
           className="text-[28px] text-white font-bold absolute right-[32px]"
           onClick={() => setCurrentStatus(!currenStatus)}

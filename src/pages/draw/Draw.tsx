@@ -13,7 +13,7 @@ import deleteIcon from '@assets/draw/delete.png';
 import Progress from 'src/components/progress/Progress';
 import { useImmer } from 'use-immer';
 import { enableMapSet } from 'immer';
-import { useSize } from 'ahooks';
+import { useMemoizedFn, useSize } from 'ahooks';
 import './cover.less';
 import ButtonShadow from 'src/components/button-shadow/ButtonShadow';
 import ButtonBg from 'src/components/button-bg/ButtonBg';
@@ -237,6 +237,10 @@ const Draw = () => {
   }, [collectionDetail, setDrawWork]);
   const { t } = useTranslation();
 
+  const handlePlayDrawSpeed = useMemoizedFn((index: number) => {
+    handlePostMessage('speed', { speed: index });
+  });
+
   return (
     <div className="bg-[rgba(89,56,236,1)] h-screen w-screen">
       <div className="flex items-center justify-center mb-[10px] relative pt-[10px]" ref={headerRef}>
@@ -295,7 +299,7 @@ const Draw = () => {
           </div>
         </div>
         <div className="bg-[#F0F3F6] p-[48px] w-screen" style={{ borderRadius: '30px 30px 0 0' }}>
-          <div className="text-[44px] font-bold text-[#333333] leading-[53px]">Frames</div>
+          <div className="text-[44px] font-bold text-[#333333] leading-[53px]">{t('draw-light-frames')}</div>
           <div className="mt-[32px] overflow-x-auto overflow-y-hidden flex items-start mx-[-10px] ">
             {drawWork?.map((item, index) => {
               return (
@@ -363,8 +367,8 @@ const Draw = () => {
             ) : null}
           </div>
           <div className="flex items-center justify-between my-[32px]">
-            <div className="text-[44px] text-[#333333] font-bold leading-[53px]">Speed</div>
-            <Progress />
+            <div className="text-[44px] text-[#333333] font-bold leading-[53px]">{t('draw-light-speed')}</div>
+            <Progress onChange={handlePlayDrawSpeed} />
           </div>
           <div className="flex items-center justify-between mb-[20px]">
             <div className="h-[96px] bg-[#D7DCE1] rounded-[48px] flex justify-center items-center text-[36px] leading-[50px] text-[#333333] font-semibold flex-1">

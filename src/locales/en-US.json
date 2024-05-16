@@ -14,5 +14,11 @@
     "cancel": "Cancel",
     "edit": "Edit",
     "save": "Save",
-    "preview": "Preview"
+    "preview": "Preview",
+    "scroll-text": "Scrolling Text",
+    "scroll-text-generate": "Generate",
+    "scroll-text-placeholder": "please input english",
+    "draw-light-speed": "Speed",
+    "draw-light-frames": "Frames",
+    "effect": "My Effects"
 }
