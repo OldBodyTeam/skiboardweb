@@ -38,7 +38,7 @@ const Login = () => {
       </div>
 
       <div className="ignore-register-block w-screen">
-        <div className="form-block">
+        <div className="form-block" lang="en">
           <div className="text-white opacity-40 login-form-label">{t('login-user-label')}</div>
           <Input
             autoComplete="off"
