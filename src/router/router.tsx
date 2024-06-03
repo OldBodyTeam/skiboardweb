@@ -1,3 +1,4 @@
+import CreativePatterns from '@pages/creative-patterns/CreativePatterns';
 import Draw from '@pages/draw/Draw';
 import DrawList from '@pages/drew-list/DrawList';
 import Login from '@pages/login/Login';
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
   {
     path: 'draw-list',
     element: <DrawList />,
+  },
+  {
+    path: 'creative-patterns',
+    element: <CreativePatterns />,
   },
   {
     path: 'scroll-text',

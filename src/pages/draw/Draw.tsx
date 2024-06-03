@@ -366,10 +366,14 @@ const Draw = () => {
               </div>
             ) : null}
           </div>
-          <div className="flex items-center justify-between my-[32px]">
-            <div className="text-[44px] text-[#333333] font-bold leading-[53px]">{t('draw-light-speed')}</div>
-            <Progress onChange={handlePlayDrawSpeed} />
-          </div>
+          {drawWork.length > 1 ? (
+            <div className="flex items-center justify-between my-[32px]">
+              <div className="text-[44px] text-[#333333] font-bold leading-[53px]">{t('draw-light-speed')}</div>
+              <Progress onChange={handlePlayDrawSpeed} />
+            </div>
+          ) : (
+            <div className="my-32"></div>
+          )}
           <div className="flex items-center justify-between mb-[20px]">
             <div className="h-[96px] bg-[#D7DCE1] rounded-[48px] flex justify-center items-center text-[36px] leading-[50px] text-[#333333] font-semibold flex-1">
               {t('preview')}
