@@ -68,6 +68,12 @@ const Login = () => {
         >
           {t('login')}
         </div>
+        <div
+          className="bg-[#333333] flex items-center justify-center h-[120px] text-[#FDDE31] rounded-full form-button !mt-4 border-[1px] border-[#FDDE31]"
+          onClick={handleGotoRegister}
+        >
+          {t('register')}
+        </div>
         <div className="h-[40px]"></div>
       </div>
     </div>

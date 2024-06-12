@@ -31,7 +31,7 @@ const Draw = () => {
   const [scale, setScale] = useState(false);
   // 禁止点击
   const [tap, setTap] = useState(false);
-  const [btnSelected, setBtnSelected] = useState({ scale: false, clear: false, draw: false });
+  const [btnSelected, setBtnSelected] = useState({ scale: false, clear: false, draw: true });
   const handleScale = () => {
     setScale((prev) => !prev);
     setBtnSelected((prev) => {

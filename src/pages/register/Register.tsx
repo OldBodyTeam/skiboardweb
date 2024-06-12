@@ -49,7 +49,7 @@ const Register = () => {
       </div>
 
       <div className="ignore-register-block w-screen">
-        <div className="form-block">
+        <div className="form-block" lang="en">
           <div className="text-white opacity-40 login-form-label">{t('register-user-label')}</div>
           <Input
             autoComplete="off"
@@ -58,9 +58,11 @@ const Register = () => {
             className="login-form-input bg-[#131416] border-solid border-b-[1px] w-full border-[rgba(255,255,255,0.4)] pb-[33px] !text-white"
             onChange={handleUsername}
             value={username}
+            inputMode="email"
+            tabIndex={undefined}
           />
         </div>
-        <div className="form-block">
+        <div className="form-block" lang="en">
           <div className="text-white opacity-40 login-form-label">{t('register-email-label')}</div>
           <Input
             autoComplete="off"
@@ -69,6 +71,8 @@ const Register = () => {
             className="login-form-input bg-[#131416] border-solid border-b-[1px] w-full border-[rgba(255,255,255,0.4)] pb-[33px] !text-white"
             onChange={handleEmail}
             value={email}
+            inputMode="email"
+            tabIndex={undefined}
           />
         </div>
         <div>
@@ -86,6 +90,12 @@ const Register = () => {
           onClick={handleRegister}
         >
           {t('register')}
+        </div>
+        <div
+          className="bg-[#333333] flex items-center justify-center h-[120px] text-[#FDDE31] rounded-full form-button !mt-4 border-[1px] border-[#FDDE31]"
+          onClick={handleLogin}
+        >
+          {t('login')}
         </div>
         <div className="h-[40px]"></div>
       </div>
