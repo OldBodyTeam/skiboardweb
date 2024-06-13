@@ -30,7 +30,7 @@ const Draw = () => {
   // 放大缩小
   const [scale, setScale] = useState(false);
   // 禁止点击
-  const [tap, setTap] = useState(false);
+  const [tap, setTap] = useState(true);
   const [btnSelected, setBtnSelected] = useState({ scale: false, clear: false, draw: true });
   const handleScale = () => {
     setScale((prev) => !prev);
@@ -96,7 +96,7 @@ const Draw = () => {
   };
   // 创建新的画布
   const handleAddDrawList = () => {
-    handlePostMessage('create-frame', {});
+    // handlePostMessage('create-frame', {});
     setDrawWork((draft) => {
       if (draft.length < 10) {
         const data = getInitOptData();
@@ -111,6 +111,7 @@ const Draw = () => {
   };
   // 圆点操作的数据
   const handleSelected = (x: number, y: number) => {
+    console.log(x, y);
     setDrawWork((draft) => {
       const currentDrawBlock = draft[editIndex];
       const { drawBlock, drawRestoreStack } = currentDrawBlock;
@@ -216,7 +217,6 @@ const Draw = () => {
               row?.set(`${index}-${y}`, { selectStatus: true });
               console.log(row.get(`${index}-${y}`)?.selectStatus);
             });
-            console.log(row);
             drawBlock.set(index, row);
           });
           draft.push({ ...optData, drawBlock });
@@ -366,14 +366,13 @@ const Draw = () => {
               </div>
             ) : null}
           </div>
-          {drawWork.length > 1 ? (
-            <div className="flex items-center justify-between my-[32px]">
-              <div className="text-[44px] text-[#333333] font-bold leading-[53px]">{t('draw-light-speed')}</div>
-              <Progress onChange={handlePlayDrawSpeed} />
-            </div>
-          ) : (
-            <div className="my-32"></div>
-          )}
+          <div
+            className="flex items-center justify-between my-[32px]"
+            style={{ visibility: drawWork.length > 1 ? 'visible' : 'hidden' }}
+          >
+            <div className="text-[44px] text-[#333333] font-bold leading-[53px]">{t('draw-light-speed')}</div>
+            <Progress onChange={handlePlayDrawSpeed} />
+          </div>
           <div className="flex items-center justify-between mb-[20px]">
             <div className="h-[96px] bg-[#D7DCE1] rounded-[48px] flex justify-center items-center text-[36px] leading-[50px] text-[#333333] font-semibold flex-1">
               {t('preview')}
