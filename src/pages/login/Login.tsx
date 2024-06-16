@@ -14,6 +14,14 @@ const Login = () => {
       postMessage(JSON.stringify({ goPage: 'Register', type: 'route' }));
     }
   };
+  const handleGotoReset = () => {
+    if (window.ReactNativeWebView) {
+      window.ReactNativeWebView.postMessage(JSON.stringify({ goPage: 'Reset', type: 'route' }));
+    } else {
+      const postMessage = window.parent.postMessage;
+      postMessage(JSON.stringify({ goPage: 'Reset', type: 'route' }));
+    }
+  };
   const [password, setPassword] = useState('');
   const [usernameOrEmail, setUsernameOrEmail] = useState('');
   const handleLogin = () => {
@@ -73,6 +81,9 @@ const Login = () => {
           onClick={handleGotoRegister}
         >
           {t('register')}
+        </div>
+        <div className="flex items-center justify-center" onClick={handleGotoReset}>
+          <div className="text-[24px] text-white opacity-40 mt-[40px]">{t('forget')}</div>
         </div>
         <div className="h-[40px]"></div>
       </div>
