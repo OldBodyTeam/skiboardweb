@@ -22,6 +22,7 @@ import { handlePostMessage } from '@utils/brigde';
 import { useRecoilState } from 'recoil';
 import { collectionDetailState, collectionName } from 'src/stores/collection-detail/collectionDetail.atom';
 import { useTranslation } from 'react-i18next';
+import { get } from 'lodash';
 enableMapSet();
 
 const Draw = () => {
@@ -142,6 +143,19 @@ const Draw = () => {
     }
   }, [drawWork, editIndex]);
 
+  const [hasRestoreOpt, setHasRestoreOpt] = useState(false);
+  const [hasBackOpt, setHasBackOpt] = useState(false);
+
+  useEffect(() => {
+    const drawRestoreStack = [...get(drawWork, `${editIndex}.drawRestoreStack.prev`, [])];
+    setHasRestoreOpt(drawRestoreStack.length > 0);
+  }, [drawWork, editIndex]);
+
+  useEffect(() => {
+    const drawBackStack = [...get(drawWork, `${editIndex}.drawRestoreStack.next`, [])];
+    setHasBackOpt(drawBackStack.length > 0);
+  }, [drawWork, editIndex]);
+
   const handleRestore = () => {
     const drawRestoreStack = [...drawWork[editIndex].drawRestoreStack.prev];
     const item = drawRestoreStack.pop();
@@ -159,14 +173,14 @@ const Draw = () => {
   };
 
   const handleBack = () => {
-    const drawRestoreStack = [...drawWork[editIndex].drawRestoreStack.next];
-    const item = drawRestoreStack.pop();
+    const drawBackStack = [...drawWork[editIndex].drawRestoreStack.next];
+    const item = drawBackStack.pop();
     // const item = drawRestoreStack.next.pop();
     if (item) {
       setDrawWork((draft) => {
         const optData = draft[editIndex];
         optData.drawRestoreStack.prev = [...optData.drawRestoreStack.prev, item];
-        optData.drawRestoreStack.next = [...drawRestoreStack];
+        optData.drawRestoreStack.next = [...drawBackStack];
         const { x, y } = item;
         const row = optData.drawBlock.get(x)!;
         row?.set(`${x}-${y}`, { selectStatus: false });
@@ -289,8 +303,8 @@ const Draw = () => {
       <div className="absolute left-0 bottom-0" ref={optBlockRef}>
         <div className="flex items-center justify-between mx-[67px] p-[17px] bg-[rgba(155,136,244,1)] rounded-[48px] mb-[32px]">
           <div className="flex items-center">
-            <ButtonShadow icon={leftIcon} handleOptions={handleRestore} />
-            <ButtonShadow icon={rightIcon} handleOptions={handleBack} />
+            <ButtonShadow icon={hasRestoreOpt ? leftIcon : ''} handleOptions={handleRestore} />
+            <ButtonShadow icon={hasBackOpt ? rightIcon : ''} handleOptions={handleBack} />
           </div>
           <div className="flex items-center">
             <ButtonBg icon={magicIcon} handleOptions={handleTap} selected={btnSelected.draw} />

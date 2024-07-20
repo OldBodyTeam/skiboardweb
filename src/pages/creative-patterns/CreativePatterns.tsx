@@ -1,10 +1,10 @@
-import backIcon from '@assets/icon/back.png';
 import DrawItem from '@pages/draw/DrawItem';
 import { covertCanUseCanvasData, covertMap } from '@pages/draw/config';
 import { handlePostMessage } from '@utils/brigde';
+import { useSize } from 'ahooks';
+import { useEffect, useRef } from 'react';
 import { useRecoilState } from 'recoil';
 import { collectionState } from 'src/stores/collection/collection.atom';
-import { useTranslation } from 'react-i18next';
 export type CollectionType = {
   id: string;
   name: string;
@@ -12,34 +12,23 @@ export type CollectionType = {
 }[];
 
 const CreativePatterns = () => {
-  const handleGoBack = () => {
-    if (window.ReactNativeWebView) {
-      window.ReactNativeWebView.postMessage(
-        JSON.stringify({ route: { goPage: 'Home', screen: 'DesignScreen' }, type: 'route' }),
-      );
-    } else {
-      const postMessage = window.parent.postMessage;
-      postMessage(JSON.stringify({ route: { goPage: 'Home', screen: 'DesignScreen' }, type: 'route' }));
-    }
-  };
-
   const handleEditLight = (collectionId: string) => {
     handlePostMessage('go-detail', { collectionId });
   };
   const [collectionInfo] = useRecoilState(collectionState);
-  const { t } = useTranslation();
+  const divRef = useRef<HTMLDivElement>(null);
+  const size = useSize(divRef);
+  useEffect(() => {
+    if ((size?.height ?? 0) > 0) {
+      handlePostMessage('page-height', {
+        height: Math.max(document.body.offsetHeight, document.body.scrollHeight, size?.height ?? 0),
+      });
+    }
+  }, [size]);
+
   return (
-    <div className="w-screen h-full min-h-screen bg-[rgba(19,20,22,1)]">
-      <div className="flex items-center justify-center mb-[20px] relative h-[148px] px-[32px]">
-        <div
-          className="bg-[rgba(255,255,255,0.15)] flex items-center justify-center rounded-full w-[82px] h-[82px] absolute left-[32px]"
-          onClick={handleGoBack}
-        >
-          <img src={backIcon} className="w-[32px] h-[32px] inline-block" />
-        </div>
-        <div className="text-[40px] text-white font-bold">{t('creative-patterns')}</div>
-      </div>
-      <div className="px-[5px] flex flex-wrap items-center flex-1 overflow-x-hidden overflow-y-auto">
+    <div className="w-screen bg-[rgba(19,20,22,1)] " ref={divRef}>
+      <div className="px-[5px] flex flex-wrap items-center flex-1">
         {collectionInfo?.map((itemData, index) => {
           return (
             <div
