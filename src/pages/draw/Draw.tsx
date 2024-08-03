@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import DrawItem from './DrawItem';
 import leftIcon from '@assets/icon/left.png';
+import leftTraIcon from '@assets/icon/letf-tra.png';
+import rightTraIcon from '@assets/icon/right-tra.png';
 import rightIcon from '@assets/icon/right.png';
 import cleanIcon from '@assets/icon/clean.png';
 import scaleIcon from '@assets/icon/scale.png';
@@ -303,8 +305,8 @@ const Draw = () => {
       <div className="absolute left-0 bottom-0" ref={optBlockRef}>
         <div className="flex items-center justify-between mx-[67px] p-[17px] bg-[rgba(155,136,244,1)] rounded-[48px] mb-[32px]">
           <div className="flex items-center">
-            <ButtonShadow icon={hasRestoreOpt ? leftIcon : ''} handleOptions={handleRestore} />
-            <ButtonShadow icon={hasBackOpt ? rightIcon : ''} handleOptions={handleBack} />
+            <ButtonShadow icon={hasRestoreOpt ? leftIcon : leftTraIcon} handleOptions={handleRestore} />
+            <ButtonShadow icon={hasBackOpt ? rightIcon : rightTraIcon} handleOptions={handleBack} />
           </div>
           <div className="flex items-center">
             <ButtonBg icon={magicIcon} handleOptions={handleTap} selected={btnSelected.draw} />
