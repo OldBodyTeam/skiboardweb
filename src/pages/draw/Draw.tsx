@@ -19,7 +19,7 @@ import { useMemoizedFn, useSize } from 'ahooks';
 import './cover.less';
 import ButtonShadow from 'src/components/button-shadow/ButtonShadow';
 import ButtonBg from 'src/components/button-bg/ButtonBg';
-import { getInitOptData, covertCanUseCanvasData, covertDataToServer } from './config';
+import { getInitOptData, covertCanUseCanvasData, covertDataToServer, poi } from './config';
 import { handlePostMessage } from '@utils/brigde';
 import { useRecoilState } from 'recoil';
 import { collectionDetailState, collectionName } from 'src/stores/collection-detail/collectionDetail.atom';
@@ -257,6 +257,37 @@ const Draw = () => {
     handlePostMessage('speed', { speed: index });
   });
 
+  const handlePointer = useMemoizedFn(
+    (
+      item: {
+        selectStatus: boolean;
+      }[][],
+    ) => {
+      const arr = [];
+      for (let i = 0; i < item.length; i++) {
+        for (let j = 0; j < item[i].length; j++) {
+          if (item[i][j].selectStatus) {
+            console.log(poi.get(`${i}-${j}`));
+            arr.push(poi.get(`${i}-${j}`));
+          }
+        }
+      }
+      return arr;
+    },
+  );
+
+  const handlePreviewCollection = useMemoizedFn(() => {
+    const currentData = drawWork.map((v) => covertCanUseCanvasData(v.drawBlock));
+
+    const pointer = currentData.map((item) => {
+      return handlePointer(item);
+    });
+    console.log('preview', pointer);
+    handlePostMessage('preview-collection', {
+      blueData: pointer,
+    });
+  });
+
   return (
     <div className="bg-[rgba(89,56,236,1)] h-screen w-screen">
       <div className="flex items-center justify-center mb-[10px] relative pt-[10px]" ref={headerRef}>
@@ -390,7 +421,10 @@ const Draw = () => {
             <Progress onChange={handlePlayDrawSpeed} />
           </div>
           <div className="flex items-center justify-between mb-[20px]">
-            <div className="h-[96px] bg-[#D7DCE1] rounded-[48px] flex justify-center items-center text-[36px] leading-[50px] text-[#333333] font-semibold flex-1">
+            <div
+              className="h-[96px] bg-[#D7DCE1] rounded-[48px] flex justify-center items-center text-[36px] leading-[50px] text-[#333333] font-semibold flex-1"
+              onClick={handlePreviewCollection}
+            >
               {t('preview')}
             </div>
             <div
