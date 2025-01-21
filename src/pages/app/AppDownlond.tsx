@@ -9,7 +9,7 @@ const AppDownload = () => {
       <Button onClick={handleAppDownload} type="link">
         下载APP
       </Button>
-      <div className="flex items-center justify-center space-x-4 mt-6">
+      <div className=" items-center justify-center space-x-4 mt-6 hidden">
         <div className="flex flex-col justify-center items-center">
           <QRCodeCanvas value={location.origin + '/Lumii.apk'} />
           <div className="text-xs mt-2">Android Download </div>
