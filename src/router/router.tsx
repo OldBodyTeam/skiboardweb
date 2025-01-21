@@ -1,3 +1,4 @@
+import AppDownload from '@pages/app/AppDownlond';
 import CreativePatterns from '@pages/creative-patterns/CreativePatterns';
 import Draw from '@pages/draw/Draw';
 import DrawList from '@pages/drew-list/DrawList';
@@ -27,8 +28,8 @@ const router = createBrowserRouter([
     element: <CreativePatterns />,
   },
   {
-    path: 'scroll-text',
-    element: <ScrollText />,
+    path: 'app',
+    element: <AppDownload />,
   },
 ]);
 export default router;
