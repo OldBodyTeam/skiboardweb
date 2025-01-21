@@ -4,7 +4,7 @@ import Draw from '@pages/draw/Draw';
 import DrawList from '@pages/drew-list/DrawList';
 import Login from '@pages/login/Login';
 import Register from '@pages/register/Register';
-import ScrollText from '@pages/scroll-text/ScrollText';
+// import ScrollText from '@pages/scroll-text/ScrollText';
 import { createBrowserRouter } from 'react-router-dom';
 const router = createBrowserRouter([
   {
