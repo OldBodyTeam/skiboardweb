@@ -1,4 +1,5 @@
 import AppDownload from '@pages/app/AppDownlond';
+import Blog from '@pages/blog/Blog';
 import CreativePatterns from '@pages/creative-patterns/CreativePatterns';
 import Draw from '@pages/draw/Draw';
 import DrawList from '@pages/drew-list/DrawList';
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
   {
     path: 'app',
     element: <AppDownload />,
+  },
+  {
+    path: 'blog',
+    element: <Blog />,
   },
 ]);
 export default router;
