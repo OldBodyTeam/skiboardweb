@@ -2,7 +2,7 @@ import { Button, Flex } from 'antd';
 import { QRCodeCanvas } from 'qrcode.react';
 const AppDownload = () => {
   const handleAppDownload = () => {
-    window.open('/Lumii.apk');
+    window.open('https://tos.gawtec.com/app/Lumii.apk');
   };
   return (
     <Flex vertical justify="center" align="center" className="w-screen h-screen">
@@ -11,7 +11,7 @@ const AppDownload = () => {
       </Button>
       <div className=" items-center justify-center space-x-4 mt-6 hidden">
         <div className="flex flex-col justify-center items-center">
-          <QRCodeCanvas value={location.origin + '/Lumii.apk'} />
+          <QRCodeCanvas value={'https://tos.gawtec.com/app/Lumii.apk'} />
           <div className="text-xs mt-2">Android Download </div>
         </div>
         <div className="flex flex-col justify-center items-center">
